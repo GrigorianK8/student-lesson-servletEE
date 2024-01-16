@@ -24,6 +24,7 @@ public class StudentManager {
                         .email(resultSet.getString("email"))
                         .age(resultSet.getInt("age"))
                         .lesson(resultSet.getString("lesson"))
+                        .picName(resultSet.getString("pic_name"))
                         .build());
             }
         } catch (SQLException e) {
@@ -33,13 +34,14 @@ public class StudentManager {
     }
 
     public void add(Student student) {
-        String sql = "INSERT INTO student(name, surname, email, age, lesson) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO student(name, surname, email, age, lesson, pic_name) VALUES(?,?,?,?,?,?)";
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, student.getName());
             ps.setString(2, student.getSurname());
             ps.setString(3, student.getEmail());
             ps.setInt(4, student.getAge());
             ps.setString(5, student.getLesson());
+            ps.setString(6, student.getPicName());
             ps.executeUpdate();
             ResultSet generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {

@@ -20,7 +20,7 @@ public class AddLessonServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/addLesson").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/addLesson.jsp").forward(req, resp);
     }
 
     @Override

@@ -20,6 +20,6 @@ public class StudentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Student> students = studentManager.getAllStudents();
         req.setAttribute("students", students);
-        req.getRequestDispatcher("/student.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/student.jsp").forward(req, resp);
     }
 }

@@ -12,7 +12,7 @@
     List<Lesson> lessons = (List<Lesson>) request.getAttribute("lessons");
 %>
 
-Lessons | <a href="/addLesson.jsp">Add Lesson</a>
+Lessons | <a href="/addLesson">Add Lesson</a>
 
 <table>
     <tr>
