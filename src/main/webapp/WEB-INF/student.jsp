@@ -6,6 +6,7 @@
 <html>
 <head>
     <title>Students</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -65,7 +66,7 @@
 Current user <%=user.getName() + " " + user.getSurname()%> |
 
 
-Students | <a href="/addStudent">Add Student</a>
+Students | <button><a href="/addStudent"><b>Add Student</b></a></button>
 
 <% if (session.getAttribute("msg") != null) { %>
 <span style="color: darkred"><%=session.getAttribute("msg")%></span>

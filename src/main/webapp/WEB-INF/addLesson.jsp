@@ -68,7 +68,7 @@
 <%
     if (session.getAttribute("user") != null) {
         User user = (User) session.getAttribute("user");
-%> <a href="/logout">LOGOUT</a>
+%> <button><a href="/logout"><b>LOGOUT</b></a></button>
 <%
     }
 %>

@@ -6,6 +6,51 @@
 <html>
 <head>
     <title>Lessons</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightblue;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid darkgray;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: darkgreen;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: darkmagenta;
+        }
+
+        a:hover {
+            color: darkcyan;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -16,7 +61,7 @@
 %>
 Current user <%=user.getName() + " " + user.getSurname()%> |
 
-Lessons | <a href="/addLesson">Add Lesson</a>
+Lessons | <button><a href="/addLesson"><b>Add Lesson</b></a></button>
 
 <% if (session.getAttribute("msg") != null) { %>
 <span style="color: darkred"><%=session.getAttribute("msg")%></span>
@@ -38,14 +83,13 @@ Lessons | <a href="/addLesson">Add Lesson</a>
             for (Lesson lesson : lessons) {
     %>
     <tr>
-        <td><%= lesson.getId() %></td>
         </td>
         <td><%=lesson.getId()%></td>
         <td><%=lesson.getName()%></td>
         <td><%=lesson.getDuration()%></td>
         <td><%=lesson.getLecturerName()%></td>
         <td><%=lesson.getPrice()%></td>
-        <td><%= lesson.getUserId() %></td>
+        <td><%=lesson.getId()%></td>
         <td><a href="/deleteLesson?id=<%=lesson.getId()%>">delete</a></td>
     </tr>
     <%

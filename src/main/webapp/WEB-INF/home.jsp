@@ -6,8 +6,8 @@
 <html>
 <head>
     <title>Home Page</title>
-    <style>
 
+    <style>
         body {
             font-family: 'Arial', sans-serif;
             margin: 20px;
