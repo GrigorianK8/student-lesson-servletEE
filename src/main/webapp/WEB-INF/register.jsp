@@ -2,16 +2,18 @@
 <%@ page import="com.example.studentlessonservletee.model.Student" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>Login</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, SansSerif;
+            font-family: Arial, sans-serif;
         }
 
         body {
@@ -79,21 +81,18 @@
 </head>
 
 <body>
-
-<% if (session.getAttribute("msg") != null) { %>
-<span style="color: darkred"><%=session.getAttribute("msg")%></span>
-<% session.removeAttribute("msg"); %>
-<% } %>
-
 <div class="wrapper">
-    <form action="/login" method="post">
-        email: <input type="text" name="email"/><br>
-        password: <input type="text" name="password"/><br>
-        <button type="submit">LOGIN</button>
+    <h1>Register</h1>
+    <form action="/register" method="post">
+        name: <input type="text" placeholder="name"/><br>
+        surname: <input type="text" placeholder="surname"/><br>
+        email: <input type="text" placeholder="email"/><br>
+        password: <input type="password" placeholder="password"/><br>
+        <button type="submit">REGISTER</button>
     </form>
     <div class="member">
-        Not Registered? <a href="/register">
-        Register Here
+        Already have an account? <a href="/index">
+        Login Here!
     </a>
     </div>
 </div>

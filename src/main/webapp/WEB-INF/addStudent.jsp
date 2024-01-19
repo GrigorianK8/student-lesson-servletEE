@@ -1,3 +1,4 @@
+<%@ page import="com.example.studentlessonservletee.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -44,11 +45,38 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+
+        .welcome-message {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #28a745;
+        }
+
+        .logout-link {
+            color: #dc3545;
+        }
+
     </style>
 </head>
 
 <body>
+
+<%
+    if (session.getAttribute("user") != null) {
+        User user = (User) session.getAttribute("user");
+%> <a href="/logout">LOGOUT</a>
+<%
+    }
+%>
+
 <h2>Add Student</h2><br>
+
+<% if (session.getAttribute("msg") != null) { %>
+<span style="color: darkred"><%= session.getAttribute("msg") %></span><br>
+<% session.removeAttribute("msg"); %>
+<% } %>
+
 <form method="post" action="/addStudent" enctype="multipart/form-data">
     Student name: <input type="text" name="studentName"><br>
     Student surname: <input type="text" name="studentSurname"><br>

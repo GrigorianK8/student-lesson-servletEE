@@ -1,7 +1,8 @@
-package com.example.studentlessonservletee.servlet;
+ package com.example.studentlessonservletee.servlet;
 
 import com.example.studentlessonservletee.manager.StudentManager;
 import com.example.studentlessonservletee.model.Student;
+import com.example.studentlessonservletee.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -29,12 +30,16 @@ public class AddStudentServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/addStudent.jsp").forward(req, resp);
     }
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String studentName = req.getParameter("studentName");
         String studentSurname = req.getParameter("studentSurname");
         String studentEmail = req.getParameter("studentEmail");
+        if (studentManager.emailNameExists(studentEmail)) {
+            req.getSession().setAttribute("msg", "Email with this name already exists");
+            resp.sendRedirect("/addStudent");
+            return;
+        }
         int studentAge = Integer.parseInt(req.getParameter("studentAge"));
         String studentLesson = req.getParameter("studentLesson");
         Part picture = req.getPart("picture");
@@ -44,14 +49,19 @@ public class AddStudentServlet extends HttpServlet {
             picture.write(UPLOAD_DIRECTORY + File.separator + pictureName);
         }
 
-        studentManager.add(Student.builder()
-                .name(studentName)
-                .surname(studentSurname)
-                .email(studentEmail)
-                .age(studentAge)
-                .lesson(studentLesson)
-                .picName(pictureName)
-                .build());
+        User user = (User) req.getSession().getAttribute("user");
+
+        studentManager.add(
+                Student.builder()
+                        .name(studentName)
+                        .surname(studentSurname)
+                        .email(studentEmail)
+                        .age(studentAge)
+                        .lesson(studentLesson)
+                        .picName(pictureName)
+                        .userId(user.getId())
+                        .build());
+
         resp.sendRedirect("/student");
     }
 }

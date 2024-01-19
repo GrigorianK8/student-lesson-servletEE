@@ -2,6 +2,7 @@ package com.example.studentlessonservletee.manager;
 
 import com.example.studentlessonservletee.db.DBConnectionProvider;
 import com.example.studentlessonservletee.model.Lesson;
+import com.example.studentlessonservletee.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class LessonManager {
 
     Connection connection = DBConnectionProvider.getInstance().getConnection();
 
-    public List<Lesson> getAllLessons() {
+    public List<Lesson> getAllLessons(int userId) {
         String sql = "SELECT * FROM lesson";
         List<Lesson> lessons = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
@@ -23,6 +24,7 @@ public class LessonManager {
                         .duration(Time.valueOf(resultSet.getTime("duration").toLocalTime()))
                         .lecturerName(resultSet.getString("lecturer_name"))
                         .price(resultSet.getDouble("price"))
+                        .userId(resultSet.getInt("user_id"))
                         .build());
             }
         } catch (SQLException e) {
@@ -32,21 +34,36 @@ public class LessonManager {
     }
 
     public void add(Lesson lesson) {
-        String sql ="INSERT INTO lesson(name, duration, lecturer_name, price) VALUES(?,?,?,?)";
+        String sql ="INSERT INTO lesson(name, duration, lecturer_name, price, user_id) VALUES(?,?,?,?,?)";
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, lesson.getName());
             ps.setTime(2, lesson.getDuration());
             ps.setString(3, lesson.getLecturerName());
             ps.setDouble(4, lesson.getPrice());
+            ps.setInt(5, lesson.getUserId());
             ps.executeUpdate();
             ResultSet generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
                 int id = generatedKeys.getInt(1);
-                lesson.setId(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean lessonNameExists(String lessonName) {
+        String sql = "SELECT COUNT(*) FROM lesson WHERE name = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, lessonName);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public void deleteLesson(int id) {

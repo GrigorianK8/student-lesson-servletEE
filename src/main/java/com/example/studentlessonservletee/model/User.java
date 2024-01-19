@@ -9,14 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student {
+public class User {
 
     private int id;
     private String name;
     private String surname;
     private String email;
-    private int age;
-    private String lesson;
-    private String picName;
-    private int userId;
+    private String password;
 }
